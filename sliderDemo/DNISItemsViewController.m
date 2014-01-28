@@ -7,8 +7,13 @@
 //
 
 #import "DNISItemsViewController.h"
+#import "DNISItem.h"
+#import "DNISItemCell.h"
+#import <UIKit/UIActionSheet.h>
 
-@interface DNISItemsViewController ()
+@interface DNISItemsViewController () <UIActionSheetDelegate>
+
+@property NSMutableArray * listItems;
 
 @end
 
@@ -23,15 +28,30 @@
     return self;
 }
 
+-(void) createListItems
+{
+    DNISItem *item = [[DNISItem alloc] init];
+    [item setItemName:@"List Item One"];
+    
+    [[self listItems] addObject:item];
+    
+    DNISItem *item1 = [[DNISItem alloc] init];
+    [item1 setItemName:@"List Item Two"];
+    
+    [[self listItems] addObject:item1];
+    
+    DNISItem *item2 = [[DNISItem alloc] init];
+    [item2 setItemName:@"List Item Three"];
+    
+    [[self listItems] addObject:item2];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self setListItems:[[NSMutableArray alloc] init]];
+    [self createListItems];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,80 +60,67 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    NSArray *items = [[NSArray alloc] init];
+    items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isDeleted == %d", NO]];
+    
+    return [items count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    DNISItemCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+
+    NSArray *items = [[NSArray alloc] init];
+    items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isDeleted == %d", NO]];
+    
+    
+    [cell initWithItem:[items objectAtIndex:[indexPath row]]];
+     
+    [[cell textLabel] setText:[[items objectAtIndex:[indexPath row]] itemName]];
     
     // Configure the cell...
+    [[cell moreInfoButton] addTarget:self action:@selector(moreInfoButton:) forControlEvents:UIControlEventTouchUpInside];
+    [[cell moreInfoButton] setTag:[indexPath row]];
+    
+    [[cell deleteButton] addTarget:self action:@selector(deleteButton:) forControlEvents:UIControlEventTouchUpInside];
+    [[cell deleteButton] setTag:[indexPath row]];
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+-(void) moreInfoButton:(UIButton *) sender
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+    NSLog(@"more button clicked for row %d", sender.tag);
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"#1 Action Button", @"#2 Action Button", nil];
+    
+    [actionSheet setTag:[sender tag]];
+    [actionSheet setActionSheetStyle:UIActionSheetStyleDefault];
+    [actionSheet showInView: [self view]];
 }
 
- */
+-(void) deleteButton: (UIButton *) sender
+{
+    NSLog(@"delete button clicked for row %d", sender.tag);
+    
+    DNISItem * item = [[self listItems] objectAtIndex:[sender tag]];
+    [item setDeleted:YES];
+    
+    [[self tableView] reloadData];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"button index %d was clicked for row %d", buttonIndex, [actionSheet tag]);
+    [[self tableView] reloadData];
+}
 
 @end

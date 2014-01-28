@@ -21,6 +21,9 @@
 		8C9DECAF18975FA000C3F616 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8C9DECAD18975FA000C3F616 /* InfoPlist.strings */; };
 		8C9DECB118975FA000C3F616 /* sliderDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECB018975FA000C3F616 /* sliderDemoTests.m */; };
 		8C9DECBC1897752300C3F616 /* DNISItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECBB1897752300C3F616 /* DNISItemsViewController.m */; };
+		8C9DECC51897794500C3F616 /* DNISItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECC41897794500C3F616 /* DNISItem.m */; };
+		8C9DECC81897871500C3F616 /* DNISSwiperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECC71897871500C3F616 /* DNISSwiperCell.m */; };
+		8C9DECCB1897876400C3F616 /* DNISItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECCA1897876400C3F616 /* DNISItemCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,12 @@
 		8C9DECB018975FA000C3F616 /* sliderDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sliderDemoTests.m; sourceTree = "<group>"; };
 		8C9DECBA1897752300C3F616 /* DNISItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNISItemsViewController.h; sourceTree = "<group>"; };
 		8C9DECBB1897752300C3F616 /* DNISItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNISItemsViewController.m; sourceTree = "<group>"; };
+		8C9DECC31897794500C3F616 /* DNISItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNISItem.h; sourceTree = "<group>"; };
+		8C9DECC41897794500C3F616 /* DNISItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNISItem.m; sourceTree = "<group>"; };
+		8C9DECC61897871500C3F616 /* DNISSwiperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNISSwiperCell.h; sourceTree = "<group>"; };
+		8C9DECC71897871500C3F616 /* DNISSwiperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNISSwiperCell.m; sourceTree = "<group>"; };
+		8C9DECC91897876400C3F616 /* DNISItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNISItemCell.h; sourceTree = "<group>"; };
+		8C9DECCA1897876400C3F616 /* DNISItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNISItemCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +121,8 @@
 		8C9DEC8B18975FA000C3F616 /* sliderDemo */ = {
 			isa = PBXGroup;
 			children = (
+				8C9DECC61897871500C3F616 /* DNISSwiperCell.h */,
+				8C9DECC71897871500C3F616 /* DNISSwiperCell.m */,
 				8C9DEC9418975FA000C3F616 /* DNISAppDelegate.h */,
 				8C9DEC9518975FA000C3F616 /* DNISAppDelegate.m */,
 				8C9DEC9718975FA000C3F616 /* Main.storyboard */,
@@ -119,6 +130,10 @@
 				8C9DEC8C18975FA000C3F616 /* Supporting Files */,
 				8C9DECBA1897752300C3F616 /* DNISItemsViewController.h */,
 				8C9DECBB1897752300C3F616 /* DNISItemsViewController.m */,
+				8C9DECC31897794500C3F616 /* DNISItem.h */,
+				8C9DECC41897794500C3F616 /* DNISItem.m */,
+				8C9DECC91897876400C3F616 /* DNISItemCell.h */,
+				8C9DECCA1897876400C3F616 /* DNISItemCell.m */,
 			);
 			path = sliderDemo;
 			sourceTree = "<group>";
@@ -250,8 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C9DECCB1897876400C3F616 /* DNISItemCell.m in Sources */,
+				8C9DECC81897871500C3F616 /* DNISSwiperCell.m in Sources */,
 				8C9DEC9618975FA000C3F616 /* DNISAppDelegate.m in Sources */,
 				8C9DEC9218975FA000C3F616 /* main.m in Sources */,
+				8C9DECC51897794500C3F616 /* DNISItem.m in Sources */,
 				8C9DECBC1897752300C3F616 /* DNISItemsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
