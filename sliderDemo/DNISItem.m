@@ -14,8 +14,10 @@
 {
     self = [super init];
     
-    [self setCreationDate:[NSDate date]];
-    [self setDeleted:NO];
+    if(self) {
+        [self setCreationDate:[NSDate date]];
+        [self setDeleted:NO];
+    }
     
     return self;
 }
