@@ -130,6 +130,7 @@
 
 -(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    // for now when the devices changes orientation reload the data
     [[self tableView] reloadData];
 }
 @end

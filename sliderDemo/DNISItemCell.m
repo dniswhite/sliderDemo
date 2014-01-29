@@ -75,6 +75,7 @@
     [[self titleLabel] setText:[item itemName]];
     [[self detailLabel] setText:@"This is where the subtitle text will go and hopefully it stretches out long enough."];
     
+    // change the boundary information in case the device orientation has changed
     CGRect bounds = [self bounds];
     
     [[self buttonView] setFrame:bounds];
