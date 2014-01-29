@@ -81,7 +81,6 @@
     NSArray *items = [[NSArray alloc] init];
     items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isDeleted == %d", NO]];
     
-    
     [cell initWithItem:[items objectAtIndex:[indexPath row]]];
      
     [[cell textLabel] setText:[[items objectAtIndex:[indexPath row]] itemName]];
@@ -129,4 +128,8 @@
     [[self tableView] reloadData];
 }
 
+-(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [[self tableView] reloadData];
+}
 @end

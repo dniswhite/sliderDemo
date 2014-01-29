@@ -15,7 +15,6 @@
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UIView *buttonView;
 
-@property BOOL cellClosed;
 @property int buttonCellWidth;
 
 @end

@@ -25,12 +25,12 @@
     
     if(self){
         CGRect frame = [[self buttonView] bounds];
-        [self setMoreInfoButton:[[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-(80*2), 0, 80, frame.size.height)]];
+        [self setMoreInfoButton:[[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-(80*2), 0, 80, 45)]];
         [[self moreInfoButton] setTitle:@"More" forState:UIControlStateNormal];
         [[self moreInfoButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [[self moreInfoButton] setBackgroundColor:[UIColor grayColor]];
         
-        [self setDeleteButton:[[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-(80*1), 0, 80, frame.size.height)]];
+        [self setDeleteButton:[[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-(80*1), 0, 80, 45)]];
         [[self deleteButton] setTitle:@"Delete" forState:UIControlStateNormal];
         [[self deleteButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [[self deleteButton] setBackgroundColor:[UIColor redColor]];
@@ -74,6 +74,14 @@
 {
     [[self titleLabel] setText:[item itemName]];
     [[self detailLabel] setText:@"This is where the subtitle text will go and hopefully it stretches out long enough."];
+    
+    CGRect bounds = [self bounds];
+    
+    [[self buttonView] setFrame:bounds];
+    [[self backgroundView] setFrame:bounds];
+    
+    [[self moreInfoButton] setFrame:CGRectMake(bounds.size.width-(80*2), 0, 80, bounds.size.height)];
+    [[self deleteButton] setFrame:CGRectMake(bounds.size.width-(80*1), 0, 80, bounds.size.height)];
 }
 
 @end

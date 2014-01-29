@@ -36,8 +36,6 @@
     
     [self addSubview:self.buttonView];
     [self addSubview:self.backgroundView];
-    
-    [self setCellClosed:YES];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -112,10 +110,8 @@
         
         if (finalX < self.frame.size.width/2 - [self buttonCellWidth]/2) {
             finalX = self.frame.size.width/2 - [self buttonCellWidth];
-            [self setCellClosed:NO];
         } else {
             finalX = self.frame.size.width/2;
-            [self setCellClosed:YES];
         }
         
         CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
