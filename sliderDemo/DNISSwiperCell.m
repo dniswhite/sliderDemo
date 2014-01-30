@@ -18,7 +18,6 @@
 
 -(void)initSwiperCell
 {
-    // initialization code for nib loading here
     [self setSwipingGesture:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureSwipeLeft:)]];
     
     CGRect parentFrame = [self frame];
@@ -42,8 +41,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
-    NSLog(@"init with style called");
-
     if (self) {
         [self initSwiperCell];
     }
@@ -53,8 +50,6 @@
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    NSLog(@"init with coder called");
-    
     self = [super initWithCoder:aDecoder];
 
     if (self) {
@@ -96,8 +91,20 @@
     if (firstX+translatedPoint.x > self.frame.size.width/2){
         translatedPoint = CGPointMake(self.frame.size.width/2, [[sender view] center].y);
     } else if (firstX+translatedPoint.x <self.frame.size.width/2 - [self buttonCellWidth]) {
+        if ([[self delegate] respondsToSelector:@selector(canSwiperCellOpen:)]) {
+            if (NO == [[self delegate] canSwiperCellOpen:self]) {
+                return;
+            }
+        }
+        
         translatedPoint = CGPointMake(self.frame.size.width/2 - [self buttonCellWidth], [[sender view] center].y);
     } else {
+        if ([[self delegate] respondsToSelector:@selector(canSwiperCellOpen:)]) {
+            if (NO == [[self delegate] canSwiperCellOpen:self]) {
+                return;
+            }
+        }
+        
         translatedPoint = CGPointMake(firstX+translatedPoint.x, [[sender view] center].y);
     }
  
@@ -110,8 +117,14 @@
         
         if (finalX < self.frame.size.width/2 - [self buttonCellWidth]/2) {
             finalX = self.frame.size.width/2 - [self buttonCellWidth];
+            if ([[self delegate] respondsToSelector:@selector(swiperCellIsOpen:)]) {
+                [[self delegate] swiperCellIsOpen:self];
+            }
         } else {
             finalX = self.frame.size.width/2;
+            if ([[self delegate] respondsToSelector:@selector(swiperCellIsClosed:)]) {
+                [[self delegate] swiperCellIsClosed:self];
+            }
         }
         
         CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;

@@ -11,7 +11,7 @@
 #import "DNISItemCell.h"
 #import <UIKit/UIActionSheet.h>
 
-@interface DNISItemsViewController () <UIActionSheetDelegate>
+@interface DNISItemsViewController () <UIActionSheetDelegate, DNISSwiperDelegate>
 
 @property NSMutableArray * listItems;
 
@@ -77,6 +77,8 @@
 {
     static NSString *CellIdentifier = @"Cell";
     DNISItemCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    [cell setDelegate:self];
 
     NSArray *items = [[NSArray alloc] init];
     items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isDeleted == %d", NO]];
@@ -133,4 +135,20 @@
     // for now when the devices changes orientation reload the data
     [[self tableView] reloadData];
 }
+
+-(void) swiperCellIsClosed:(DNISSwiperCell *)sender
+{
+    NSLog(@"cell is closed");
+}
+
+-(void) swiperCellIsOpen:(DNISSwiperCell *)sender
+{
+    NSLog(@"cell is open");
+}
+
+-(BOOL) canSwiperCellOpen:(DNISSwiperCell *)sender
+{
+    return YES;
+}
+
 @end
