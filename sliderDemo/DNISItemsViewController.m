@@ -79,7 +79,7 @@
     DNISItemCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     [cell setDelegate:self];
-
+    
     NSArray *items = [[NSArray alloc] init];
     items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isDeleted == %d", NO]];
     
@@ -100,6 +100,10 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [[self tableView] deselectRowAtIndexPath:indexPath animated:YES];
+
+    //DNISItemCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    //[cell closeSwiperCell];
+    
     [[self tableView] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
 }
 
@@ -136,6 +140,16 @@
     [[self tableView] reloadData];
 }
 
+-(void) swiperCellSwipeHasStarted: (DNISSwiperCell *) sender
+{
+    NSLog(@"swipe has started");
+}
+
+-(void) swiperCellSwipeHasStopped: (DNISSwiperCell *) sender;
+{
+    NSLog(@"swipe has stopped");
+}
+
 -(void) swiperCellIsClosed:(DNISSwiperCell *)sender
 {
     NSLog(@"cell is closed");
@@ -144,11 +158,6 @@
 -(void) swiperCellIsOpen:(DNISSwiperCell *)sender
 {
     NSLog(@"cell is open");
-}
-
--(BOOL) canSwiperCellOpen:(DNISSwiperCell *)sender
-{
-    return YES;
 }
 
 @end

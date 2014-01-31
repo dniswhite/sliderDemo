@@ -13,8 +13,9 @@
 @protocol DNISSwiperDelegate <NSObject>
 
 @optional
--(BOOL) canSwiperCellOpen: (DNISSwiperCell *) sender;
--(void) swiperCellIsOpen:(DNISSwiperCell *) sender;
+-(void) swiperCellSwipeHasStarted: (DNISSwiperCell *) sender;
+-(void) swiperCellSwipeHasStopped: (DNISSwiperCell *) sender;
+-(void) swiperCellIsOpen: (DNISSwiperCell *) sender;
 -(void) swiperCellIsClosed:(DNISSwiperCell *) sender;
 
 @end
@@ -29,5 +30,7 @@
 @property (nonatomic, assign) id delegate;
 
 @property int buttonCellWidth;
+
+-(void) closeSwiperCell;
 
 @end
