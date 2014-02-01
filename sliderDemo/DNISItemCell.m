@@ -24,7 +24,7 @@
     self = [super initWithCoder:aDecoder];
     
     if(self){
-        CGRect frame = [[self buttonView] bounds];
+        CGRect frame = [[self swiperButtonView] bounds];
         [self setMoreInfoButton:[[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-(80*2), 0, 80, 45)]];
         [[self moreInfoButton] setTitle:@"More" forState:UIControlStateNormal];
         [[self moreInfoButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -35,8 +35,8 @@
         [[self deleteButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [[self deleteButton] setBackgroundColor:[UIColor redColor]];
         
-        [[self buttonView] addSubview:[self moreInfoButton]];
-        [[self buttonView] addSubview:[self deleteButton]];
+        [[self swiperButtonView] addSubview:[self moreInfoButton]];
+        [[self swiperButtonView] addSubview:[self deleteButton]];
         
         [self setTitleLabel:[[UILabel alloc] initWithFrame:CGRectMake(15, 3, 300, 22)]];
         [[self titleLabel] setFont:[UIFont systemFontOfSize:18]];
@@ -61,10 +61,10 @@
         [[self detailLabel] setTextColor:[UIColor blackColor]];
         [[self detailLabel] setTextAlignment:NSTextAlignmentLeft];
         
-        [[self backgroundView] addSubview:[self titleLabel]];
-        [[self backgroundView] addSubview:[self detailLabel]];
+        [[self swiperContentView] addSubview:[self titleLabel]];
+        [[self swiperContentView] addSubview:[self detailLabel]];
         
-        [self setButtonCellWidth:160];
+        [self setSwipperButtonViewWidth:160];
     }
     
     return self;
@@ -78,8 +78,8 @@
     // change the boundary information in case the device orientation has changed
     CGRect bounds = [self bounds];
     
-    [[self buttonView] setFrame:bounds];
-    [[self backgroundView] setFrame:bounds];
+    [[self swiperButtonView] setFrame:bounds];
+    [[self swiperContentView] setFrame:bounds];
     
     [[self moreInfoButton] setFrame:CGRectMake(bounds.size.width-(80*2), 0, 80, bounds.size.height)];
     [[self deleteButton] setFrame:CGRectMake(bounds.size.width-(80*1), 0, 80, bounds.size.height)];

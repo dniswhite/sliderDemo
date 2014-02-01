@@ -1,6 +1,5 @@
 //
-//  XYZSwiperCell.m
-//  ToDoList
+//  DNISSwiperCell.m
 //
 //  Created by Dennis White on 1/4/14.
 //  Copyright (c) 2014 dniswhite. All rights reserved.
@@ -26,15 +25,15 @@
     [[self swipingGesture] setMinimumNumberOfTouches:1];
     [[self swipingGesture] setDelegate: self];
     
-    [self setBackgroundView: [[UIView alloc] initWithFrame: parentFrame]];
-    [[self backgroundView] setBackgroundColor:[UIColor whiteColor]];
-    [[self backgroundView] addGestureRecognizer:[self swipingGesture]];
+    [self setSwiperContentView: [[UIView alloc] initWithFrame: parentFrame]];
+    [[self swiperContentView] setBackgroundColor:[UIColor whiteColor]];
+    [[self swiperContentView] addGestureRecognizer:[self swipingGesture]];
     
-    [self setButtonView: [[UIView alloc] initWithFrame: parentFrame]];
-    [[self buttonView] setBackgroundColor:[UIColor whiteColor]];
+    [self setSwiperButtonView: [[UIView alloc] initWithFrame: parentFrame]];
+    [[self swiperButtonView] setBackgroundColor:[UIColor whiteColor]];
     
-    [self addSubview:self.buttonView];
-    [self addSubview:self.backgroundView];
+    [self addSubview: [self swiperButtonView]];
+    [self addSubview: [self swiperContentView]];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -70,7 +69,7 @@
 {
     if ([UIPanGestureRecognizer class] == [gestureRecognizer class]) {
         UIPanGestureRecognizer *instance = (UIPanGestureRecognizer *) gestureRecognizer;
-        CGPoint point = [instance velocityInView:self.backgroundView];
+        CGPoint point = [instance velocityInView:self.swiperContentView];
         if (fabsf(point.x) > fabsf(point.y)) {
             if ([[self delegate] respondsToSelector:@selector(swiperCellSwipeHasStarted:)]) {
                 [[self delegate] swiperCellSwipeHasStarted:self];
@@ -86,7 +85,7 @@
 
 -(void)gestureSwipeLeft:(UIPanGestureRecognizer *)sender
 {
-    CGPoint translatedPoint = [(UIPanGestureRecognizer *)sender translationInView:self.backgroundView];
+    CGPoint translatedPoint = [(UIPanGestureRecognizer *)sender translationInView:self.swiperContentView];
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
         firstX = [[sender view] center].x;
@@ -94,8 +93,8 @@
     
     if (firstX+translatedPoint.x > self.frame.size.width/2){
         translatedPoint = CGPointMake(self.frame.size.width/2, [[sender view] center].y);
-    } else if (firstX+translatedPoint.x <self.frame.size.width/2 - [self buttonCellWidth]) {
-        translatedPoint = CGPointMake(self.frame.size.width/2 - [self buttonCellWidth], [[sender view] center].y);
+    } else if (firstX+translatedPoint.x <self.frame.size.width/2 - [self swipperButtonViewWidth]) {
+        translatedPoint = CGPointMake(self.frame.size.width/2 - [self swipperButtonViewWidth], [[sender view] center].y);
     } else {
         translatedPoint = CGPointMake(firstX+translatedPoint.x, [[sender view] center].y);
     }
@@ -107,12 +106,12 @@
             [[self delegate] swiperCellSwipeHasStopped:self];
         }
         
-        CGFloat velocityX = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.backgroundView].x);
+        CGFloat velocityX = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.swiperContentView].x);
         
         CGFloat finalX = translatedPoint.x + velocityX;
         
-        if (finalX < self.frame.size.width/2 - [self buttonCellWidth]/2) {
-            finalX = self.frame.size.width/2 - [self buttonCellWidth];
+        if (finalX < self.frame.size.width/2 - [self swipperButtonViewWidth]/2) {
+            finalX = self.frame.size.width/2 - [self swipperButtonViewWidth];
             if ([[self delegate] respondsToSelector:@selector(swiperCellIsOpen:)]) {
                 [[self delegate] swiperCellIsOpen:self];
             }
@@ -126,16 +125,9 @@
         CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
         
         [UIView animateWithDuration:animationDuration animations:^{
-            [[self backgroundView] setCenter:CGPointMake(finalX, [[self backgroundView] center].y) ];
+            [[self swiperContentView] setCenter:CGPointMake(finalX, [[self swiperContentView] center].y) ];
         }];
     }
-}
-
--(void) closeSwiperCell
-{
-    [UIView animateWithDuration:0.2 animations:^{
-        [[self backgroundView] setCenter:CGPointMake([self buttonCellWidth], [[self backgroundView] center].y) ];
-    }];
 }
 
 @end
