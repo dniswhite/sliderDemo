@@ -7,6 +7,8 @@
 
 #import "DNISSwiperCell.h"
 
+static CGFloat const sliderAnimationDuration = 0.25;
+
 @interface DNISSwiperCell()
 
 @property UIPanGestureRecognizer *swipingGesture;
@@ -30,7 +32,6 @@
     [[self swiperContentView] addGestureRecognizer:[self swipingGesture]];
     
     [self setSwiperButtonView: [[UIView alloc] initWithFrame: parentFrame]];
-    [[self swiperButtonView] setBackgroundColor:[UIColor whiteColor]];
     
     [self addSubview: [self swiperButtonView]];
     [self addSubview: [self swiperContentView]];
@@ -71,10 +72,6 @@
         UIPanGestureRecognizer *instance = (UIPanGestureRecognizer *) gestureRecognizer;
         CGPoint point = [instance velocityInView:self.swiperContentView];
         if (fabsf(point.x) > fabsf(point.y)) {
-            if ([[self delegate] respondsToSelector:@selector(swiperCellSwipeHasStarted:)]) {
-                [[self delegate] swiperCellSwipeHasStarted:self];
-            }
-
             return YES;
         }
     }
@@ -89,6 +86,10 @@
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
         firstX = [[sender view] center].x;
+
+        if ([[self delegate] respondsToSelector:@selector(swiperCellSwipeHasStarted:)]) {
+            [[self delegate] swiperCellSwipeHasStarted:self];
+        }
     }
     
     if (firstX+translatedPoint.x > self.frame.size.width/2){
@@ -106,26 +107,23 @@
             [[self delegate] swiperCellSwipeHasStopped:self];
         }
         
-        CGFloat velocityX = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.swiperContentView].x);
+        CGFloat velocityX = [(UIPanGestureRecognizer*)sender velocityInView:self.swiperContentView].x;
+        CGFloat destinationX = translatedPoint.x + velocityX;
         
-        CGFloat finalX = translatedPoint.x + velocityX;
-        
-        if (finalX < self.frame.size.width/2 - [self swipperButtonViewWidth]/2) {
-            finalX = self.frame.size.width/2 - [self swipperButtonViewWidth];
+        if (destinationX < ([self center].x - [self swipperButtonViewWidth])) {
+            destinationX = [self center].x - [self swipperButtonViewWidth];
             if ([[self delegate] respondsToSelector:@selector(swiperCellIsOpen:)]) {
                 [[self delegate] swiperCellIsOpen:self];
             }
         } else {
-            finalX = self.frame.size.width/2;
+            destinationX = [self center].x;
             if ([[self delegate] respondsToSelector:@selector(swiperCellIsClosed:)]) {
                 [[self delegate] swiperCellIsClosed:self];
             }
         }
         
-        CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
-        
-        [UIView animateWithDuration:animationDuration animations:^{
-            [[self swiperContentView] setCenter:CGPointMake(finalX, [[self swiperContentView] center].y) ];
+        [UIView animateWithDuration:sliderAnimationDuration animations:^{
+            [[self swiperContentView] setCenter:CGPointMake(destinationX, [[self swiperContentView] center].y) ];
         }];
     }
 }
