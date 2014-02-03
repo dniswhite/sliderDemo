@@ -1,6 +1,6 @@
 sliderDemo
 ==========
-<p style="align:center"><img src="https://raw.github.com//dniswhite/sliderDemo/master/demo/sliderDemo.gif"></p>
+<p align="center"><img src="https://raw.github.com//dniswhite/sliderDemo/master/demo/sliderDemo.gif"></p>
 
 Was curious about making a sliding cell and came across [SWTableViewCell](https://github.com/CEWendel/SWTableViewCell) and was curious if I could simplify. This is by no means an improvement on it but rather a test to see if I could do something simpler. 
 
