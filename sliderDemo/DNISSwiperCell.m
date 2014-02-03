@@ -92,10 +92,10 @@ static CGFloat const sliderAnimationDuration = 0.25;
         }
     }
     
-    if (firstX+translatedPoint.x > self.frame.size.width/2){
-        translatedPoint = CGPointMake(self.frame.size.width/2, [[sender view] center].y);
-    } else if (firstX+translatedPoint.x <self.frame.size.width/2 - [self swipperButtonViewWidth]) {
-        translatedPoint = CGPointMake(self.frame.size.width/2 - [self swipperButtonViewWidth], [[sender view] center].y);
+    if (firstX+translatedPoint.x > [self center].x){
+        translatedPoint = CGPointMake([self center].x, [[sender view] center].y);
+    } else if (firstX+translatedPoint.x <[self center].x - [self swipperButtonViewWidth]) {
+        translatedPoint = CGPointMake([self center].x - [self swipperButtonViewWidth], [[sender view] center].y);
     } else {
         translatedPoint = CGPointMake(firstX+translatedPoint.x, [[sender view] center].y);
     }
