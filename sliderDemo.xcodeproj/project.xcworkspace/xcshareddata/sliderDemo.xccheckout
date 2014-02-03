@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E48D119C-A36D-48E9-9B65-E6B0549231FD</string>
+	<key>IDESourceControlProjectName</key>
+	<string>sliderDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>4FF1B4B3-B455-4653-B2BA-DEAB9E8E569D</key>
+		<string>https://github.com/dniswhite/sliderDemo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>sliderDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>4FF1B4B3-B455-4653-B2BA-DEAB9E8E569D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dniswhite/sliderDemo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>4FF1B4B3-B455-4653-B2BA-DEAB9E8E569D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4FF1B4B3-B455-4653-B2BA-DEAB9E8E569D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sliderDemo</string>
+		</dict>
+	</array>
+</dict>
+</plist>
