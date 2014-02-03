@@ -15,11 +15,11 @@ The buttons or whatever you place in the 'swiperButtonView' get displayed when t
 ###Notifcation
 There are delegates in place to keep you notified when the user starts to swipe and when they have finished as well as for when the cell has opened and closed.
 
-'''objc
+```objc
 @interface DNISItemsViewController () <UIActionSheetDelegate, DNISSwiperDelegate>
-'''
+```
 
-'''objc
+```objc
 -(void) swiperCellSwipeHasStarted: (DNISSwiperCell *) sender
 {
     NSLog(@"swipe has started");
@@ -39,13 +39,13 @@ There are delegates in place to keep you notified when the user starts to swipe 
 {
     NSLog(@"cell is open");
 }
-'''
+```
 
 ###Inheritance
 By itself 'DNISSwiperCell' does nothing for you. It is expected that you (developer) will extend it to fit your needs. What is given to you is a content view 'swiperContentView' where you place the information that is normally displayed and then 'swiperButtonView' which is where you place the content to be displayed when the user swipes left. 
 
 ####.h 
-'''objc
+```objc
 #import "DNISSwiperCell.h"
 #import "DNISItem.h"
 
@@ -60,10 +60,10 @@ By itself 'DNISSwiperCell' does nothing for you. It is expected that you (develo
 -(void) initWithItem:(DNISItem *) item;
 
 @end
-'''
+```
 
 ####.m 
-'''objc
+```objc
 #import "DNISItemCell.h"
 
 @implementation DNISItemCell
@@ -129,4 +129,4 @@ By itself 'DNISSwiperCell' does nothing for you. It is expected that you (develo
 }
 
 @end
-'''
+```
