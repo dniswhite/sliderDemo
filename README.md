@@ -2,7 +2,7 @@ sliderDemo
 ==========
 <p align="center"><img src="https://raw.github.com//dniswhite/sliderDemo/master/demo/sliderDemo.gif"></p>
 
-Was curious about making a sliding cell and came across [SWTableViewCell](https://github.com/CEWendel/SWTableViewCell) and was curious if I could simplify. This is by no means an improvement on it but rather a test to see if I could do something simpler. 
+Was looking into making a `UITableViewCell` that slides like what is found in the iOS mail app and then I came across [SWTableViewCell](https://github.com/CEWendel/SWTableViewCell) and was curious if I could simplify it a bit. This is by no means an improvement on it but rather a test to see if I could do something simpler and possibly easier to use. 
 
 ##Usage
 
@@ -10,10 +10,10 @@ Was curious about making a sliding cell and came across [SWTableViewCell](https:
 Review through the sample application for an example of how to use everything.
 
 ###Cell Swiping
-The buttons or whatever you place in the 'swiperButtonView' get displayed when the user swipes to the left on any given cell.
+The buttons or whatever you place in the `swiperButtonView` get displayed when the user swipes to the left on any given cell.
 
 ###Notifcation
-There are delegates in place to keep you notified when the user starts to swipe and when they have finished as well as for when the cell has opened and closed.
+There are delegates in place to keep you notified when the user starts to swipe and when they have finished swiping as well as when the cell has opened and closed.
 
 ```objc
 @interface DNISItemsViewController () <UIActionSheetDelegate, DNISSwiperDelegate>
@@ -42,7 +42,7 @@ There are delegates in place to keep you notified when the user starts to swipe 
 ```
 
 ###Inheritance
-By itself 'DNISSwiperCell' does nothing for you. It is expected that you (developer) will extend it to fit your needs. What is given to you is a content view 'swiperContentView' where you place the information that is normally displayed and then 'swiperButtonView' which is where you place the content to be displayed when the user swipes left. 
+By itself `DNISSwiperCell` does nothing for you. It is expected that you (developer) will extend it to fit your needs. What is given to you is a content view `swiperContentView` where you place the information that is normally displayed and then `swiperButtonView` which is where you place the content to be displayed when the user swipes left. 
 
 ####.h 
 ```objc
@@ -130,3 +130,5 @@ By itself 'DNISSwiperCell' does nothing for you. It is expected that you (develo
 
 @end
 ```
+###Work in Progress
+This continues to be a work in progress once it reaches a `stable` point I will release it as a CocoaPod. Until just keep coming back and checking up on things.
