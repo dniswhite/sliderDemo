@@ -21,6 +21,7 @@
 
 @interface DNISSwiperCell : UITableViewCell {
     int firstX;
+    CGPoint swipeStartingPoint;
 }
 
 @property (nonatomic, strong) UIView * swiperButtonView;
@@ -29,5 +30,7 @@
 @property (nonatomic, assign) id delegate;
 
 @property int swipperButtonViewWidth;
+
+@property (readonly) CGPoint swipeStartAt;
 
 @end

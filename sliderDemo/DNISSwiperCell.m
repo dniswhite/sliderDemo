@@ -9,9 +9,23 @@
 
 static CGFloat const sliderAnimationDuration = 0.25;
 
+enum DNISSwipingGesture {
+    DNISSwiperGestureNone = 0,
+    DNISSwiperGestureStarted,
+    DNISSWiperGestureLeft,
+    DNISSwiperGestureRight
+    };
+
+enum DNISSWiperCellState {
+    DNISSwiperCellClosed = 0,
+    DNISSwiperCellOpen
+    };
+
 @interface DNISSwiperCell()
 
 @property UIPanGestureRecognizer *swipingGesture;
+@property enum DNISSwipingGesture gesture;
+@property enum DNISSWiperCellState cellState;
 
 @end
 
@@ -86,9 +100,33 @@ static CGFloat const sliderAnimationDuration = 0.25;
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
         firstX = [[sender view] center].x;
+        swipeStartingPoint = translatedPoint;
 
         if ([[self delegate] respondsToSelector:@selector(swiperCellSwipeHasStarted:)]) {
             [[self delegate] swiperCellSwipeHasStarted:self];
+        }
+        
+        _swipeStartAt = swipeStartingPoint;
+        [self setGesture: DNISSwiperGestureStarted];
+    }
+    
+    if ([self gesture] == DNISSwiperGestureStarted) {
+        if (swipeStartingPoint.x>translatedPoint.x) {
+            [self setGesture:DNISSWiperGestureLeft];
+            
+            if ([self cellState] == DNISSwiperCellClosed) {
+                NSLog(@"opening cell");
+            }
+            NSLog(@"swiping left");
+            
+        } else if (swipeStartingPoint.x<translatedPoint.x) {
+            [self setGesture:DNISSwiperGestureRight];
+            
+            if([self cellState] == DNISSwiperCellOpen) {
+                NSLog(@"closing cell");
+            }
+            
+            NSLog(@"swiping right");
         }
     }
     
@@ -112,15 +150,28 @@ static CGFloat const sliderAnimationDuration = 0.25;
         
         if (destinationX < ([self center].x - [self swipperButtonViewWidth])) {
             destinationX = [self center].x - [self swipperButtonViewWidth];
-            if ([[self delegate] respondsToSelector:@selector(swiperCellIsOpen:)]) {
-                [[self delegate] swiperCellIsOpen:self];
+            
+            if ([self cellState] == DNISSwiperCellClosed) {
+                [self setCellState:DNISSwiperCellOpen];
+                
+                if ([[self delegate] respondsToSelector:@selector(swiperCellIsOpen:)]) {
+                    [[self delegate] swiperCellIsOpen:self];
+                }
             }
+
         } else {
             destinationX = [self center].x;
-            if ([[self delegate] respondsToSelector:@selector(swiperCellIsClosed:)]) {
-                [[self delegate] swiperCellIsClosed:self];
+            
+            if ([self cellState] == DNISSwiperCellOpen ) {
+                [self setCellState:DNISSwiperCellClosed];
+                
+                if ([[self delegate] respondsToSelector:@selector(swiperCellIsClosed:)]) {
+                    [[self delegate] swiperCellIsClosed:self];
+                }
             }
         }
+        
+        [self setGesture:DNISSwiperGestureNone];
         
         [UIView animateWithDuration:sliderAnimationDuration animations:^{
             [[self swiperContentView] setCenter:CGPointMake(destinationX, [[self swiperContentView] center].y) ];
