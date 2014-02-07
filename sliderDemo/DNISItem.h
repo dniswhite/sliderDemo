@@ -14,5 +14,6 @@
 @property NSDate * creationDate;
 
 @property (getter = isDeleted) BOOL deleted;
+@property (getter = isSliderOpen) BOOL sliderOpen;
 
 @end

@@ -17,6 +17,9 @@
 -(void) swiperCellIsOpen: (DNISSwiperCell *) sender;
 -(void) swiperCellIsClosed:(DNISSwiperCell *) sender;
 
+@required
+-(BOOL) swiperRecognizeGesture: (DNISSwiperCell *) sender;
+
 @end
 
 @interface DNISSwiperCell : UITableViewCell {

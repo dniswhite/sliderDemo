@@ -17,6 +17,7 @@
     if(self) {
         [self setCreationDate:[NSDate date]];
         [self setDeleted:NO];
+        [self setSliderOpen:NO];
     }
     
     return self;

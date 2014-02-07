@@ -76,6 +76,7 @@ enum DNISSWiperCellState {
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+    [self setCellState:DNISSwiperCellClosed];
 }
 
 #pragma swiping gesture implementation for delegate
@@ -96,6 +97,10 @@ enum DNISSWiperCellState {
 
 -(void)gestureSwipeLeft:(UIPanGestureRecognizer *)sender
 {
+    if (NO == [[self delegate] swiperRecognizeGesture:self]) {
+        return;
+    }
+    
     CGPoint translatedPoint = [(UIPanGestureRecognizer *)sender translationInView:self.swiperContentView];
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {

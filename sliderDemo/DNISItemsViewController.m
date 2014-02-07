@@ -30,20 +30,13 @@
 
 -(void) createListItems
 {
-    DNISItem *item = [[DNISItem alloc] init];
-    [item setItemName:@"List Item One"];
-    
-    [[self listItems] addObject:item];
-    
-    DNISItem *item1 = [[DNISItem alloc] init];
-    [item1 setItemName:@"List Item Two"];
-    
-    [[self listItems] addObject:item1];
-    
-    DNISItem *item2 = [[DNISItem alloc] init];
-    [item2 setItemName:@"List Item Three"];
-    
-    [[self listItems] addObject:item2];
+    // just create some random data to fill up the table
+    for (int count = 0; count < 30; count++) {
+        DNISItem *item = [[DNISItem alloc] init];
+        [item setItemName: [[NSString alloc] initWithFormat:@"List Item %d", count]];
+        
+        [[self listItems] addObject:item];
+    }
 }
 
 - (void)viewDidLoad
@@ -57,6 +50,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
 
@@ -78,19 +72,19 @@
     static NSString *CellIdentifier = @"Cell";
     DNISItemCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    [cell setDelegate:self];
-    
     NSArray *items = [[NSArray alloc] init];
     items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isDeleted == %d", NO]];
     
-    [cell initWithItem:[items objectAtIndex:[indexPath row]]];
-     
-    [[cell textLabel] setText:[[items objectAtIndex:[indexPath row]] itemName]];
-    
     // Configure the cell...
+    [cell setDelegate:self];
+
+    [cell initWithItem:[items objectAtIndex:[indexPath row]]];
+    
+    [[cell moreInfoButton] removeTarget:self action:@selector(moreInfoButton:) forControlEvents:UIControlEventTouchUpInside];
     [[cell moreInfoButton] addTarget:self action:@selector(moreInfoButton:) forControlEvents:UIControlEventTouchUpInside];
     [[cell moreInfoButton] setTag:[indexPath row]];
     
+    [[cell deleteButton] removeTarget:self action:@selector(deleteButton:) forControlEvents:UIControlEventTouchUpInside];
     [[cell deleteButton] addTarget:self action:@selector(deleteButton:) forControlEvents:UIControlEventTouchUpInside];
     [[cell deleteButton] setTag:[indexPath row]];
     
@@ -101,10 +95,16 @@
 {
     [[self tableView] deselectRowAtIndexPath:indexPath animated:YES];
 
-    //DNISItemCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    //[cell closeSwiperCell];
+    DNISItem * item = [[self listItems] objectAtIndex:indexPath.row];
     
-    [[self tableView] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    (YES == item.isSliderOpen) ? NSLog(@"YES") : NSLog(@"NO");
+    
+    if (YES == item.isSliderOpen) {
+        [[self tableView] setScrollEnabled:YES];
+        [[self tableView] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+        
+        [item setSliderOpen:NO];
+    }
 }
 
 -(void) moreInfoButton:(UIButton *) sender
@@ -124,19 +124,45 @@
     
     DNISItem * item = [[self listItems] objectAtIndex:[sender tag]];
     [item setDeleted:YES];
+    [item setSliderOpen:NO];
     
+    [[self tableView] setScrollEnabled:YES];
     [[self tableView] reloadData];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSLog(@"button index %d was clicked for row %d", buttonIndex, [actionSheet tag]);
+
+    NSArray *items = [[NSArray alloc] init];
+    items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isSliderOpen == %d", YES]];
+    
+    if (0 < [items count]) {
+        [[self tableView] setScrollEnabled:YES];
+        
+        for (DNISItem * item in items) {
+            [item setSliderOpen:NO];
+        }
+    }
+    
     [[self tableView] reloadData];
 }
 
 -(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    // for now when the devices changes orientation reload the data
+    NSLog(@"rotating device and resetting rows");
+
+    NSArray *items = [[NSArray alloc] init];
+    items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isSliderOpen == %d", YES]];
+    
+    if (0 < [items count]) {
+        [[self tableView] setScrollEnabled:YES];
+
+        for (DNISItem * item in items) {
+            [item setSliderOpen:NO];
+        }
+    }
+
     [[self tableView] reloadData];
 }
 
@@ -153,11 +179,47 @@
 -(void) swiperCellIsClosed:(DNISSwiperCell *)sender
 {
     NSLog(@"cell is closed");
+
+    NSIndexPath * indexPath = [[self tableView] indexPathForCell:sender];
+    DNISItem * item = [[self listItems] objectAtIndex:indexPath.row];
+    
+    [item setSliderOpen:NO];
+    [[self tableView] setScrollEnabled:YES];
 }
 
 -(void) swiperCellIsOpen:(DNISSwiperCell *)sender
 {
     NSLog(@"cell is open");
+
+    NSIndexPath * indexPath = [[self tableView] indexPathForCell:sender];
+    DNISItem * item = [[self listItems] objectAtIndex:indexPath.row];
+    
+    NSLog(@"%@", item.itemName);
+    
+    if ([item itemName] == nil) {
+        NSLog(@"empty");
+    }
+    
+    [item setSliderOpen:YES];
+    [[self tableView] setScrollEnabled:NO];
+}
+
+-(BOOL) swiperRecognizeGesture:(DNISSwiperCell *)sender
+{
+    NSArray *items = [[NSArray alloc] init];
+    items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isSliderOpen == %d", YES]];
+    NSIndexPath * indexPath = [[self tableView] indexPathForCell:sender];
+    
+    DNISItem * item = [[self listItems] objectAtIndex:indexPath.row];
+    if ([item isSliderOpen] == YES) {
+        return YES;
+    }
+    
+    if ([items count] >= 1) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
