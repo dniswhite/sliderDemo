@@ -24,6 +24,7 @@
 		8C9DECC51897794500C3F616 /* DNISItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECC41897794500C3F616 /* DNISItem.m */; };
 		8C9DECC81897871500C3F616 /* DNISSwiperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECC71897871500C3F616 /* DNISSwiperCell.m */; };
 		8C9DECCB1897876400C3F616 /* DNISItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9DECCA1897876400C3F616 /* DNISItemCell.m */; };
+		8CEE1E2D18B1C3860077B8C3 /* DNISActionSheetBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEE1E2C18B1C3860077B8C3 /* DNISActionSheetBlocks.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		8C9DECC71897871500C3F616 /* DNISSwiperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNISSwiperCell.m; sourceTree = "<group>"; };
 		8C9DECC91897876400C3F616 /* DNISItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNISItemCell.h; sourceTree = "<group>"; };
 		8C9DECCA1897876400C3F616 /* DNISItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNISItemCell.m; sourceTree = "<group>"; };
+		8CEE1E2B18B1C3860077B8C3 /* DNISActionSheetBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNISActionSheetBlocks.h; sourceTree = "<group>"; };
+		8CEE1E2C18B1C3860077B8C3 /* DNISActionSheetBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNISActionSheetBlocks.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +133,8 @@
 				8C9DEC8C18975FA000C3F616 /* Supporting Files */,
 				8C9DECBA1897752300C3F616 /* DNISItemsViewController.h */,
 				8C9DECBB1897752300C3F616 /* DNISItemsViewController.m */,
+				8CEE1E2B18B1C3860077B8C3 /* DNISActionSheetBlocks.h */,
+				8CEE1E2C18B1C3860077B8C3 /* DNISActionSheetBlocks.m */,
 				8C9DECC31897794500C3F616 /* DNISItem.h */,
 				8C9DECC41897794500C3F616 /* DNISItem.m */,
 				8C9DECC91897876400C3F616 /* DNISItemCell.h */,
@@ -270,6 +275,7 @@
 				8C9DEC9618975FA000C3F616 /* DNISAppDelegate.m in Sources */,
 				8C9DEC9218975FA000C3F616 /* main.m in Sources */,
 				8C9DECC51897794500C3F616 /* DNISItem.m in Sources */,
+				8CEE1E2D18B1C3860077B8C3 /* DNISActionSheetBlocks.m in Sources */,
 				8C9DECBC1897752300C3F616 /* DNISItemsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,6 +485,7 @@
 				8C9DECB618975FA000C3F616 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8C9DECB718975FA000C3F616 /* Build configuration list for PBXNativeTarget "sliderDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -487,6 +494,7 @@
 				8C9DECB918975FA000C3F616 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -9,9 +9,9 @@
 #import "DNISItemsViewController.h"
 #import "DNISItem.h"
 #import "DNISItemCell.h"
-#import <UIKit/UIActionSheet.h>
+#import "DNISActionSheetBlocks.h"
 
-@interface DNISItemsViewController () <UIActionSheetDelegate, DNISSwiperDelegate>
+@interface DNISItemsViewController () <DNISSwiperDelegate>
 
 @property NSMutableArray * listItems;
 
@@ -110,8 +110,24 @@
 -(void) moreInfoButton:(UIButton *) sender
 {
     NSLog(@"more button clicked for row %d", sender.tag);
-
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"#1 Action Button", @"#2 Action Button", nil];
+    
+    // this should be the table view cell
+    DNISItemCell * itemCell = (DNISItemCell *)[[[sender superview] superview] superview];
+    
+    // if I use a block here I can then capture the cell in the callback for the actionsheet
+    DNISActionSheetBlocks *actionSheet = [[DNISActionSheetBlocks alloc] initWithButtons: @"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"#1 Action Button", @"#2 Action Button", nil];
+    
+    [actionSheet setBlockDidDismissWithButton:^(UIActionSheet * sheet, NSInteger index) {
+        NSIndexPath * indexPath = [[self tableView] indexPathForCell:itemCell];
+        DNISItem * item = [[self listItems] objectAtIndex:indexPath.row];
+        
+        [[self tableView] setScrollEnabled:YES];
+        [[self tableView] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+        
+        [item setSliderOpen:NO];
+        
+        NSLog(@"itemCell logging %@", [[itemCell titleLabel] text]);
+    }];
     
     [actionSheet setTag:[sender tag]];
     [actionSheet setActionSheetStyle:UIActionSheetStyleDefault];
@@ -122,29 +138,19 @@
 {
     NSLog(@"delete button clicked for row %d", sender.tag);
     
-    DNISItem * item = [[self listItems] objectAtIndex:[sender tag]];
+    DNISItemCell * itemCell = (DNISItemCell *)[[[sender superview] superview] superview];
+    NSIndexPath * indexPath = [[self tableView] indexPathForCell:itemCell];
+    
+    NSLog(@"delete %d", [indexPath row]);
+    DNISItem * item = [[self listItems] objectAtIndex:sender.tag];
+    
+    [[self tableView] setScrollEnabled:YES];
+    [[self tableView] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+
     [item setDeleted:YES];
     [item setSliderOpen:NO];
     
     [[self tableView] setScrollEnabled:YES];
-    [[self tableView] reloadData];
-}
-
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"button index %d was clicked for row %d", buttonIndex, [actionSheet tag]);
-
-    NSArray *items = [[NSArray alloc] init];
-    items = [[self listItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isSliderOpen == %d", YES]];
-    
-    if (0 < [items count]) {
-        [[self tableView] setScrollEnabled:YES];
-        
-        for (DNISItem * item in items) {
-            [item setSliderOpen:NO];
-        }
-    }
-    
     [[self tableView] reloadData];
 }
 
