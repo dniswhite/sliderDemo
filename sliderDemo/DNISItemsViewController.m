@@ -31,7 +31,7 @@
 -(void) createListItems
 {
     // just create some random data to fill up the table
-    for (int count = 0; count < 30; count++) {
+    for (int count = 0; count < 10; count++) {
         DNISItem *item = [[DNISItem alloc] init];
         [item setItemName: [[NSString alloc] initWithFormat:@"List Item %d", count]];
         
@@ -141,15 +141,13 @@
     DNISItemCell * itemCell = (DNISItemCell *)[[[sender superview] superview] superview];
     NSIndexPath * indexPath = [[self tableView] indexPathForCell:itemCell];
     
-    NSLog(@"delete %d", [indexPath row]);
-    DNISItem * item = [[self listItems] objectAtIndex:sender.tag];
+    DNISItem * item = [[self listItems] objectAtIndex:[indexPath row]];
+    NSLog(@"tag data for row %d", [sender tag]);
+    NSLog(@"delete row %d (%@)", [indexPath row], [item itemName]);
     
-    [[self tableView] setScrollEnabled:YES];
-    [[self tableView] reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-
-    [item setDeleted:YES];
     [item setSliderOpen:NO];
-    
+    [item setDeleted:YES];
+
     [[self tableView] setScrollEnabled:YES];
     [[self tableView] reloadData];
 }
