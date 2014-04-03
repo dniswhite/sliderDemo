@@ -37,6 +37,9 @@
         
         [[self swiperButtonView] addSubview:[self moreInfoButton]];
         [[self swiperButtonView] addSubview:[self deleteButton]];
+
+        [[self swiperContentView] setBackgroundColor:[UIColor blackColor]];
+        
         
         [self setTitleLabel:[[UILabel alloc] initWithFrame:CGRectMake(15, 3, 300, 22)]];
         [[self titleLabel] setFont:[UIFont systemFontOfSize:18]];
